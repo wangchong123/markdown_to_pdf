@@ -324,7 +324,12 @@ class _HomeScreenState extends State<HomeScreen>
         maxLines: null,
         expands: true,
         textAlignVertical: TextAlignVertical.top,
-        style: const TextStyle(fontSize: 14, height: 1.5),
+        style: const TextStyle(
+          fontSize: 14,
+          height: 1.5,
+          color: Color(0xFF1F1F1F),
+          fontWeight: FontWeight.w500,
+        ),
         decoration: const InputDecoration(
           hintText: '在此输入或粘贴 Markdown 内容…',
           border: OutlineInputBorder(),
@@ -342,13 +347,47 @@ class _HomeScreenState extends State<HomeScreen>
         if (text.trim().isEmpty) {
           return const Center(child: Text('暂无预览内容'));
         }
+        const textColor = Color(0xFF1F1F1F);
+        const headingColor = Color(0xFF111111);
+        const baseStyle = TextStyle(
+          color: textColor,
+          fontWeight: FontWeight.w500,
+          fontSize: 15,
+          height: 1.55,
+        );
+        TextStyle heading(double size) => TextStyle(
+              color: headingColor,
+              fontWeight: FontWeight.w700,
+              fontSize: size,
+              height: 1.3,
+            );
         return Markdown(
           data: text,
           padding: const EdgeInsets.all(16),
           selectable: true,
           styleSheet: MarkdownStyleSheet(
+            p: baseStyle,
+            listBullet: baseStyle,
+            tableBody: baseStyle,
+            tableHead: baseStyle.copyWith(fontWeight: FontWeight.w700),
+            checkbox: baseStyle,
+            em: baseStyle.copyWith(fontStyle: FontStyle.italic),
+            strong: baseStyle.copyWith(fontWeight: FontWeight.w800),
+            a: baseStyle.copyWith(
+              color: const Color(0xFF1565C0),
+              decoration: TextDecoration.underline,
+            ),
+            h1: heading(26),
+            h2: heading(22),
+            h3: heading(19),
+            h4: heading(17),
+            h5: heading(15),
+            h6: heading(14),
+            blockquote: baseStyle.copyWith(color: const Color(0xFF424242)),
             code: const TextStyle(
+              color: Color(0xFF1F1F1F),
               fontFamily: 'monospace',
+              fontSize: 13.5,
               backgroundColor: Color(0xFFF1F3F4),
             ),
             codeblockDecoration: BoxDecoration(
